@@ -45,6 +45,30 @@
             margin-top: 20px;
             font-weight: bold;
         }
+
+        .footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e5e5;
+            color: #444;
+            font-size: 0.95em;
+            text-align: left;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px 18px;
+        }
+
+        .footer span {
+            display: block;
+            line-height: 1.5;
+        }
+
+        .footer strong {
+            display: block;
+            font-size: 0.9em;
+            color: #333;
+            margin-bottom: 4px;
+        }
         
         @keyframes fadeIn {
             from {
@@ -61,8 +85,56 @@
 <body>
     <div class="container">
         <h1>Hello World!</h1>
-        <p>Welcome to your first Django application</p>
+        <p>Welcome to a Django application On Digital Oceaan </p>
         <div class="django-badge">Powered by Django 6.0</div>
+        <div class="footer">
+            <span>
+                <strong>User Location</strong>
+                <span id="user-location">Detecting...</span>
+            </span>
+            <span>
+                <strong>User Time and Date</strong>
+                <span id="user-time">Loading...</span>
+            </span>
+            <span>
+                <strong>Developed by</strong>
+                <span>Net1io.com</span>
+            </span>
+            <span>
+                <strong>Notice</strong>
+                <span>Copyright (C) and Confidentiality Applies</span>
+            </span>
+        </div>
     </div>
+    <script>
+        const locationEl = document.getElementById('user-location');
+        const timeEl = document.getElementById('user-time');
+
+        function updateTime() {
+            const now = new Date();
+            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            timeEl.textContent = `${now.toLocaleString()} (${tz})`;
+        }
+
+        function setLocation(text) {
+            locationEl.textContent = text;
+        }
+
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const { latitude, longitude } = pos.coords;
+                    setLocation(`${latitude.toFixed(3)}, ${longitude.toFixed(3)}`);
+                },
+                () => setLocation('Permission denied or unavailable'),
+                { maximumAge: 600000, timeout: 5000 }
+            );
+        } else {
+            setLocation('Geolocation not supported');
+        }
+
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
 </body>
 </html>
