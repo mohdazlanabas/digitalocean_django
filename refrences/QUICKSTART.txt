@@ -1,0 +1,70 @@
+# Quick Start Guide - Django Hello World
+
+## To Run This Application:
+
+1. Navigate to the project directory:
+   cd helloworld_project
+
+2. Run the development server:
+   python3 manage.py runserver
+
+3. Open your browser and visit:
+   http://127.0.0.1:8000/
+
+4. You should see "Hello World!" displayed with a purple gradient background.
+
+## File Structure Overview:
+
+helloworld_project/
+├── manage.py                              # Django management script
+├── README.md                              # Detailed documentation
+├── helloworld_project/                    # Project settings
+│   ├── settings.py                        # Configuration (database, apps, middleware)
+│   ├── urls.py                            # Main URL router
+│   └── [other config files]
+└── hello/                                 # Your "Hello World" app
+    ├── views.py                           # View function (hello_world)
+    ├── urls.py                            # App URL patterns
+    └── templates/hello/index.html         # HTML template
+
+## Key Files Modified/Created:
+
+1. hello/views.py          - Defines the hello_world view
+2. hello/urls.py           - Maps root URL to hello_world view
+3. hello/templates/hello/index.html - HTML template
+4. helloworld_project/urls.py - Includes hello app URLs
+5. helloworld_project/settings.py - Added 'hello' to INSTALLED_APPS
+
+## Django Request Flow:
+
+1. User visits http://127.0.0.1:8000/
+2. Django checks helloworld_project/urls.py
+3. Finds path('', include('hello.urls'))
+4. Checks hello/urls.py
+5. Finds path('', views.hello_world)
+6. Calls hello_world() function in views.py
+7. Function renders hello/index.html template
+8. Returns HTML to browser
+
+## To Customize:
+
+- Change the HTML: Edit hello/templates/hello/index.html
+- Add more pages: Add functions to hello/views.py and paths to hello/urls.py
+- Change styling: Modify the <style> section in index.html
+
+## Common Issues:
+
+If you get "Template not found":
+- Make sure 'hello' is in INSTALLED_APPS in settings.py
+- Template path should be: hello/templates/hello/index.html
+
+If port 8000 is busy:
+- Use: python3 manage.py runserver 8080
+
+## Next Steps:
+
+Check README.md for:
+- Detailed step-by-step explanation
+- Django concepts (MTV pattern, URL routing)
+- Common Django commands
+- Ideas for expanding the application
